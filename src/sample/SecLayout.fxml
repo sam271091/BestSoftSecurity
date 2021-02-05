@@ -91,7 +91,7 @@
                                     <RadioButton id="RadioServer" fx:id="RadioServer" mnemonicParsing="false" text="Server" toggleGroup="$LocationType" />
                                  </children>
                               </HBox>
-                              <TabPane id="TypeTables" prefHeight="275.0" prefWidth="645.0" tabClosingPolicy="UNAVAILABLE">
+                              <TabPane id="TypeTables" fx:id="TypeTables" prefHeight="275.0" prefWidth="645.0" tabClosingPolicy="UNAVAILABLE">
                                  <tabs>
                                     <Tab id="TabFile" fx:id="TabFile" text="File">
                                        <content>

@@ -1,11 +1,7 @@
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 
 public class SecurityInstaller {
 
@@ -40,6 +36,9 @@ public class SecurityInstaller {
     private RadioButton RadioServer;
 
     @FXML
+    private TabPane TypeTables;
+
+    @FXML
     private Tab TabFile;
 
     @FXML
@@ -68,5 +67,41 @@ public class SecurityInstaller {
 
     @FXML
     private Button ButtonNext;
+
+    @FXML
+    void initialize(){
+
+
+        SetTabVisible();
+
+        RadioFile.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                SetTabVisible();
+            }
+        });
+
+        RadioServer.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                SetTabVisible();
+            }
+        });
+
+
+
+    }
+
+
+    void SetTabVisible(){
+        TypeTables.getTabs().removeAll(TabFile,TabServer);
+        if (RadioFile.isSelected()){
+            TypeTables.getTabs().add(0,TabFile);
+        } else {
+            TypeTables.getTabs().add(0,TabServer);
+        }
+
+    }
+
 
 }
