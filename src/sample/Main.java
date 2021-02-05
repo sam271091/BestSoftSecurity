@@ -11,8 +11,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("SecLayout.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setTitle("Best Soft: Configuration keys instalation wizard");
+        primaryStage.setResizable(false);
+        primaryStage.setScene(new Scene(root, 642, 420));
         primaryStage.show();
     }
 
