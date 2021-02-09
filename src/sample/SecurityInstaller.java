@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -151,12 +152,27 @@ public class SecurityInstaller {
         });
 
 
+        ButtonOpen.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                JFileChooser f = new JFileChooser();
+                f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                f.showSaveDialog(null);
+
+                TextFieldPath.setText(f.getSelectedFile().toString());
+
+            }
+        });
+
+
     }
 
 
     void SetConfText(RadioButton radioButton){
         Configuration currentConf = dataMap.get(radioButton);
         TextAreaConfDescription.setText(currentConf.getConfDescription().toString());
+
 
     }
 
