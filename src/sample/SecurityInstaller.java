@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.util.HashMap;
@@ -95,6 +96,12 @@ public class SecurityInstaller {
 
     private Configuration currentConf;
 
+    private Stage stage;
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
     @FXML
     void initialize(){
 
@@ -172,6 +179,7 @@ public class SecurityInstaller {
     void SetConfText(RadioButton radioButton){
         Configuration currentConf = dataMap.get(radioButton);
         TextAreaConfDescription.setText(currentConf.getConfDescription().toString());
+        TextAreaConfDescription.setWrapText(true);
 
 
     }
@@ -195,6 +203,17 @@ public class SecurityInstaller {
             tabNumber = 2;
         } else if (tabNumber < 0){
             tabNumber = 0;
+        } if (tabNumber == 2 && RadioFile.isSelected()){
+             if (TextFieldPath.getText().equals("")){
+                 String toastMsg = "Fill in path to the database!";
+                 int toastMsgTime = 3500; //1.5 seconds
+                 int fadeInTime = 500; //0.5 seconds
+                 int fadeOutTime= 500; //0.5 seconds
+                 Toast.makeText(stage, toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
+
+                 tabNumber = 1;
+             }
+
         }
 
        switch (tabNumber){
