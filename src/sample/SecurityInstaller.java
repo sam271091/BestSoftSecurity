@@ -76,7 +76,7 @@ public class SecurityInstaller {
     private TextField TextFieldSrvCluster;
 
     @FXML
-    private TextField TextFileInfobase;
+    private TextField TextFieldInfobase;
 
 
 
@@ -98,6 +98,7 @@ public class SecurityInstaller {
 
     private Stage stage;
 
+    private String sn;
     public void setStage(Stage stage) {
         this.stage = stage;
     }
@@ -112,6 +113,8 @@ public class SecurityInstaller {
         dataMap.put(RadioButtonConf5,new Configuration("ENTERPRISEAZ","Configuration, \"Best Soft: Manufacturing enterprise management for Azerbaijan\"","753"));
 
 
+
+        sn = DiskUtils.getSerialNumber("C");
 
         SetConfText(RadioButtonConf1);
 
@@ -176,6 +179,13 @@ public class SecurityInstaller {
     }
 
 
+    void MakeText(String msg){
+        int toastMsgTime = 3500; //1.5 seconds
+        int fadeInTime = 500; //0.5 seconds
+        int fadeOutTime= 500; //0.5 seconds
+        Toast.makeText(stage, msg, toastMsgTime, fadeInTime, fadeOutTime);
+    }
+
     void SetConfText(RadioButton radioButton){
         Configuration currentConf = dataMap.get(radioButton);
         TextAreaConfDescription.setText(currentConf.getConfDescription().toString());
@@ -205,15 +215,19 @@ public class SecurityInstaller {
             tabNumber = 0;
         } if (tabNumber == 2 && RadioFile.isSelected()){
              if (TextFieldPath.getText().equals("")){
-                 String toastMsg = "Fill in path to the database!";
-                 int toastMsgTime = 3500; //1.5 seconds
-                 int fadeInTime = 500; //0.5 seconds
-                 int fadeOutTime= 500; //0.5 seconds
-                 Toast.makeText(stage, toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
+                 String toastMsg = "Fill in the path to the database!";
+                 MakeText(toastMsg);
 
                  tabNumber = 1;
              }
 
+        } else if (tabNumber ==2 && RadioServer.isSelected()){
+            if (TextFieldSrvCluster.getText().equals("") || TextFieldInfobase.getText().equals("")){
+                String toastMsg = "Fill in the server data!";
+                MakeText(toastMsg);
+
+                tabNumber = 1;
+            }
         }
 
        switch (tabNumber){
