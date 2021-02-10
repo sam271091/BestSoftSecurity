@@ -187,7 +187,7 @@ public class SecurityInstaller {
     }
 
     void SetConfText(RadioButton radioButton){
-        Configuration currentConf = dataMap.get(radioButton);
+        currentConf = dataMap.get(radioButton);
         TextAreaConfDescription.setText(currentConf.getConfDescription().toString());
         TextAreaConfDescription.setWrapText(true);
 
