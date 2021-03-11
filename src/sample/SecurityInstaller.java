@@ -1,5 +1,9 @@
 package sample;
 
+import com.sun.jna.platform.win32.Advapi32Util;
+
+import static com.sun.jna.platform.win32.WinReg.HKEY_CURRENT_USER;
+import static com.sun.jna.platform.win32.WinReg.HKEY_LOCAL_MACHINE;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -219,6 +223,8 @@ public class SecurityInstaller {
                  MakeText(toastMsg);
 
                  tabNumber = 1;
+             } else {
+                 createKeyOnMachine();
              }
 
         } else if (tabNumber ==2 && RadioServer.isSelected()){
@@ -227,6 +233,8 @@ public class SecurityInstaller {
                 MakeText(toastMsg);
 
                 tabNumber = 1;
+            } else {
+                createKeyOnMachine();
             }
         }
 
@@ -240,6 +248,21 @@ public class SecurityInstaller {
        }
 
 
+
+    }
+
+    void createKeyOnMachine(){
+        if (OSValidator.isIsWindows()) {
+            createRegFile();
+        }
+    }
+
+
+    void createRegFile(){
+
+        Advapi32Util.registryCreateKey(HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Policies\\Control");
+        Advapi32Util.registrySetStringValue
+                (HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Policies\\Control", "test", "test1");
 
     }
 

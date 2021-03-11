@@ -3,6 +3,7 @@ package sample;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -26,6 +27,7 @@ public final class Toast
         text.setFill(Color.RED);
 
         StackPane root = new StackPane(text);
+        root.setMargin(text,new Insets(10,0,0,0));
         root.setStyle("-fx-background-radius: 20; -fx-background-color: rgba(0, 0, 0, 0.2); -fx-padding: 10px; ");
         root.setOpacity(0);
 
