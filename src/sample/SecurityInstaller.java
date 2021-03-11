@@ -240,10 +240,15 @@ public class SecurityInstaller {
 
        switch (tabNumber){
            case 0 : MainTabPane.getTabs().add(0,TabSetUp1);
+               ButtonNext.setVisible(true);
+               ButtonBack.setVisible(false);
                break;
            case 1 : MainTabPane.getTabs().add(0,TabSetUp2);
+               ButtonNext.setVisible(true);
+               ButtonBack.setVisible(true);
                break;
            case 2 : MainTabPane.getTabs().add(0,TabResult);
+               ButtonBack.setVisible(true);
                break;
        }
 
@@ -261,8 +266,25 @@ public class SecurityInstaller {
     void createRegFile(){
 
         Advapi32Util.registryCreateKey(HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Policies\\Control");
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(sn);
+        sb.append("-");
+        sb.append(currentConf.getConfKey());
+
+        StringBuilder sbKeyName = new StringBuilder();
+        sbKeyName.append("Addin");
+        sbKeyName.append("_");
+        sbKeyName.append(currentConf.getConfName() + 1);
+
+
+
         Advapi32Util.registrySetStringValue
-                (HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Policies\\Control", "test", "test1");
+                (HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Policies\\Control", sbKeyName.toString(), sb.toString());
+
+        LabelResult.setText(currentConf.getConfName() + " configuration key has been successfully installed!");
+        LabelResult.setWrapText(true);
+        ButtonNext.setVisible(false);
 
     }
 
