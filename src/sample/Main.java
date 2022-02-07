@@ -12,6 +12,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
 //        Parent root = FXMLLoader.load(getClass().getResource("SecLayout.fxml"));
 
+
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("SecLayout.fxml"));
         Parent root = (Parent)loader.load();
 
