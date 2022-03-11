@@ -120,7 +120,7 @@ public class SecurityInstaller {
         dataMap.put(RadioButtonConf5,new Configuration("ENTERPRISEAZ","Configuration, \"Best Soft: Manufacturing enterprise management for Azerbaijan\"","753"));
 
         //ERP 2.4
-        dataMap.put(RadioButtonConf6,new Configuration("ERP_2_4","Configuration, \"Best Soft: ERP 2.4\"","753"));
+        dataMap.put(RadioButtonConf6,new Configuration("ERP_2_4","Configuration, \"Best Soft: ERP 2.4\"","6256223652"));
         //
 
 
@@ -267,19 +267,27 @@ public class SecurityInstaller {
         if (OSValidator.isIsWindows()) {
             createRegFile();
         } else if (OSValidator.isIsUnix()){
-
+            createTempFile();
         }
     }
+
+
+    void createTempFile(){
+
+    }
+
 
 
     void createRegFile(){
 
         Advapi32Util.registryCreateKey(HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Policies\\Control");
 
+        long confKey = Long.parseLong(currentConf.getConfKey());
+
         StringBuilder sb = new StringBuilder();
-        sb.append(sn);
+        sb.append(decToHex(Integer.parseInt(sn)));
         sb.append("-");
-        sb.append(currentConf.getConfKey());
+        sb.append(decToHex(confKey));
 
         StringBuilder sbKeyName = new StringBuilder();
         sbKeyName.append("Addin");
@@ -298,6 +306,28 @@ public class SecurityInstaller {
     }
 
 
+    String decToHex(long inputDigit){
+
+        inputDigit = Long.max(inputDigit,-inputDigit);
+
+        int base = 16;
+
+        String result = "";
+
+        String hexSymbols = "0123456789ABCDEF";
+
+        while (inputDigit != 0) {
+            Long pos = (inputDigit % base);
+
+//            int pos = Long.
+
+            result = hexSymbols.substring(pos.intValue(),pos.intValue()+1) + result;
+
+            inputDigit = inputDigit/base;
+        }
+
+        return result;
+    }
 
 
 
