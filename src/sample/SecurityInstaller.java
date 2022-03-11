@@ -50,6 +50,9 @@ public class SecurityInstaller {
     private RadioButton RadioButtonConf5;
 
     @FXML
+    private RadioButton RadioButtonConf6;
+
+    @FXML
     private TextArea TextAreaConfDescription;
 
     @FXML
@@ -115,6 +118,10 @@ public class SecurityInstaller {
         dataMap.put(RadioButtonConf3,new Configuration("NASC_ARAUTOMATION","Configuration, \"Best Soft: Complex automation for Azerbaijan\" NASC\n","654"));
         dataMap.put(RadioButtonConf4,new Configuration("TRADE_AZ","Configuration, \"Best Soft: Trade management for Azerbaijan\"","951"));
         dataMap.put(RadioButtonConf5,new Configuration("ENTERPRISEAZ","Configuration, \"Best Soft: Manufacturing enterprise management for Azerbaijan\"","753"));
+
+        //ERP 2.4
+        dataMap.put(RadioButtonConf6,new Configuration("ERP_2_4","Configuration, \"Best Soft: ERP 2.4\"","753"));
+        //
 
 
 
@@ -259,6 +266,8 @@ public class SecurityInstaller {
     void createKeyOnMachine(){
         if (OSValidator.isIsWindows()) {
             createRegFile();
+        } else if (OSValidator.isIsUnix()){
+
         }
     }
 

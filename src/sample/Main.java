@@ -22,7 +22,7 @@ public class Main extends Application {
 
         primaryStage.setTitle("Best Soft: Configuration keys instalation wizard");
         primaryStage.setResizable(false);
-        primaryStage.setScene(new Scene(root, 642, 420));
+        primaryStage.setScene(new Scene(root, 632, 420));
         primaryStage.show();
     }
 
