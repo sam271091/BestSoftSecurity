@@ -231,7 +231,12 @@ public class SecurityInstaller {
             tabNumber = 2;
         } else if (tabNumber < 0){
             tabNumber = 0;
-        } if (tabNumber == 2 && RadioFile.isSelected()){
+        }
+
+        if (RadioButtonConf6.isSelected()){
+            createKeyOnMachine();
+            tabNumber = 2;
+        } else  if (tabNumber == 2 && RadioFile.isSelected()){
              if (TextFieldPath.getText().equals("")){
                  String toastMsg = "Fill in the path to the database!";
                  MakeText(toastMsg);
