@@ -272,8 +272,7 @@ public class SecurityInstaller {
 
     void createKeyOnMachine(){
         if (OSValidator.isIsWindows()) {
-//            createRegFile();
-            createTempFile();
+            createRegFile();
         } else if (OSValidator.isIsUnix()){
             createTempFile();
         }
