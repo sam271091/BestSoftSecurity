@@ -11,8 +11,15 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.json.JSONObject;
 
 import javax.swing.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -265,7 +272,8 @@ public class SecurityInstaller {
 
     void createKeyOnMachine(){
         if (OSValidator.isIsWindows()) {
-            createRegFile();
+//            createRegFile();
+            createTempFile();
         } else if (OSValidator.isIsUnix()){
             createTempFile();
         }
@@ -274,6 +282,55 @@ public class SecurityInstaller {
 
     void createTempFile(){
 
+        long confKey = Long.parseLong(currentConf.getConfKey());
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(decToHex(Integer.parseInt(sn)));
+        sb.append("-");
+        sb.append(decToHex(confKey));
+
+        StringBuilder sbKeyName = new StringBuilder();
+        sbKeyName.append("Addin");
+        sbKeyName.append("_");
+        sbKeyName.append(currentConf.getConfName() + 1);
+
+
+
+
+
+
+        try {
+
+            String tempDir = System.getProperty("java.io.tmpdir");
+
+
+
+            String keyPath = String.format("%s/Addin",tempDir);
+
+            File newFile = new File(keyPath);
+
+            BufferedWriter output = new BufferedWriter(new FileWriter(newFile));
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put(sbKeyName.toString(),sb.toString());
+
+            output.write(jsonObject.toString());
+            output.close();
+
+
+
+
+            LabelResult.setText(currentConf.getConfName() + " configuration key has been successfully installed!");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            LabelResult.setText(e.toString());
+        }
+
+
+
+        LabelResult.setWrapText(true);
+        ButtonNext.setVisible(false);
     }
 
 

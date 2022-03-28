@@ -3,6 +3,7 @@
     <CLASSES>
       <root url="jar://D:/Programs/JavaLibraries/jna-5.7.0.jar!/" />
       <root url="jar://D:/Programs/JavaLibraries/jna-platform-5.7.0.jar!/" />
+      <root url="jar://D:/JavaProjects/JavaLibraries/json-20210307.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
