@@ -233,10 +233,7 @@ public class SecurityInstaller {
             tabNumber = 0;
         }
 
-        if (RadioButtonConf6.isSelected()){
-            createKeyOnMachine();
-            tabNumber = 2;
-        } else  if (tabNumber == 2 && RadioFile.isSelected()){
+          if (tabNumber == 2 && RadioFile.isSelected()){
              if (TextFieldPath.getText().equals("")){
                  String toastMsg = "Fill in the path to the database!";
                  MakeText(toastMsg);
@@ -246,7 +243,12 @@ public class SecurityInstaller {
                  createKeyOnMachine();
              }
 
-        } else if (tabNumber ==2 && RadioServer.isSelected()){
+        } else if (RadioButtonConf6.isSelected()){
+            createKeyOnMachine();
+            tabNumber = 2;
+        }
+
+          else if (tabNumber ==2 && RadioServer.isSelected()){
             if (TextFieldSrvCluster.getText().equals("") || TextFieldInfobase.getText().equals("")){
                 String toastMsg = "Fill in the server data!";
                 MakeText(toastMsg);
