@@ -136,7 +136,7 @@ public class SecurityInstaller {
 
         SetConfText(RadioButtonConf1);
 
-        SetMainTabVisible(0);
+        SetMainTabVisible(0,false);
 
         SetTabVisible();
 
@@ -158,14 +158,14 @@ public class SecurityInstaller {
         ButtonBack.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                SetMainTabVisible(tabNumber-1);
+                SetMainTabVisible(tabNumber-1,true);
             }
         });
 
         ButtonNext.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                SetMainTabVisible(tabNumber+1);
+                SetMainTabVisible(tabNumber+1,false);
             }
         });
 
@@ -223,7 +223,7 @@ public class SecurityInstaller {
     }
 
 
-    void SetMainTabVisible(int currtabNumber){
+    void SetMainTabVisible(int currtabNumber,boolean backPressed){
         MainTabPane.getTabs().removeAll(TabSetUp1,TabSetUp2,TabResult);
         tabNumber = currtabNumber;
 
@@ -244,8 +244,12 @@ public class SecurityInstaller {
              }
 
         } else if (RadioButtonConf6.isSelected()){
-            createKeyOnMachine();
-            tabNumber = 2;
+            if (!backPressed) {
+                createKeyOnMachine();
+                tabNumber = 2;
+            } else {
+                tabNumber = 0;
+            }
         }
 
           else if (tabNumber ==2 && RadioServer.isSelected()){
@@ -261,15 +265,18 @@ public class SecurityInstaller {
 
        switch (tabNumber){
            case 0 : MainTabPane.getTabs().add(0,TabSetUp1);
-               ButtonNext.setVisible(true);
-               ButtonBack.setVisible(false);
+//               ButtonNext.setVisible(true);
+//               ButtonBack.setVisible(false);
+               ButtonNext.setDisable(false);
+               ButtonBack.setDisable(true);
                break;
            case 1 : MainTabPane.getTabs().add(0,TabSetUp2);
-               ButtonNext.setVisible(true);
-               ButtonBack.setVisible(true);
+               ButtonNext.setDisable(false);
+               ButtonBack.setDisable(false);
                break;
            case 2 : MainTabPane.getTabs().add(0,TabResult);
-               ButtonBack.setVisible(true);
+               ButtonNext.setDisable(true);
+               ButtonBack.setDisable(false);
                break;
        }
 
@@ -336,7 +343,8 @@ public class SecurityInstaller {
 
 
         LabelResult.setWrapText(true);
-        ButtonNext.setVisible(false);
+//        ButtonNext.setVisible(false);
+        ButtonNext.setDisable(true);
     }
 
 
@@ -364,7 +372,8 @@ public class SecurityInstaller {
 
         LabelResult.setText(currentConf.getConfName() + " configuration key has been successfully installed!");
         LabelResult.setWrapText(true);
-        ButtonNext.setVisible(false);
+//        ButtonNext.setVisible(false);
+        ButtonNext.setDisable(true);
 
     }
 
