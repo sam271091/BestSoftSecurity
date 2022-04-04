@@ -314,7 +314,7 @@ public class SecurityInstaller {
         StringBuilder sbKeyName = new StringBuilder();
         sbKeyName.append("Addin");
         sbKeyName.append("_");
-        sbKeyName.append(currentConf.getConfName() + 1);
+        sbKeyName.append(currentConf.getConfName());
 
 
 
@@ -388,7 +388,7 @@ public class SecurityInstaller {
             StringBuilder sbKeyName = new StringBuilder();
             sbKeyName.append("Addin");
             sbKeyName.append("_");
-            sbKeyName.append(currentConf.getConfName() + 1);
+            sbKeyName.append(currentConf.getConfName());
 
 
 
