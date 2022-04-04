@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="jna-5.7.0">
     <CLASSES>
-      <root url="jar://D:/Programs/JavaLibraries/jna-5.7.0.jar!/" />
-      <root url="jar://D:/Programs/JavaLibraries/jna-platform-5.7.0.jar!/" />
       <root url="jar://D:/JavaProjects/JavaLibraries/json-20210307.jar!/" />
+      <root url="jar://D:/JavaProjects/JavaLibraries/jna-platform-5.7.0.jar!/" />
+      <root url="jar://D:/JavaProjects/JavaLibraries/jna-5.7.0.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

@@ -1,9 +1,6 @@
 package sample;
 
 import com.sun.jna.platform.win32.Advapi32Util;
-
-import static com.sun.jna.platform.win32.WinReg.HKEY_CURRENT_USER;
-import static com.sun.jna.platform.win32.WinReg.HKEY_LOCAL_MACHINE;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -13,15 +10,22 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.json.JSONObject;
 
+
+
 import javax.swing.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.Map;
+
+//import com.sun.jna.platform.win32.WinReg;
+import static com.sun.jna.platform.win32.WinReg.HKEY_LOCAL_MACHINE;
+
+//import static com.sun.jna.platform.win32.WinReg.HKEY_CURRENT_USER;
+//import java.nio.file.Files;
+//import java.nio.file.Path;
+//import java.util.Map;
 
 public class SecurityInstaller {
 
@@ -132,8 +136,11 @@ public class SecurityInstaller {
 
 
 
-        sn = DiskUtils.getSerialNumber("C");
-
+        if (OSValidator.isIsWindows())
+           sn = DiskUtils.getSerialNumber_Windows("C");
+        else if (OSValidator.isIsUnix()){
+            sn = DiskUtils.getSerialNumber_Linux();
+        }
         SetConfText(RadioButtonConf1);
 
         SetMainTabVisible(0,false);
@@ -194,6 +201,7 @@ public class SecurityInstaller {
         });
 
 
+        TextAreaConfDescription.setText(sn);
     }
 
 
@@ -298,7 +306,8 @@ public class SecurityInstaller {
         long confKey = Long.parseLong(currentConf.getConfKey());
 
         StringBuilder sb = new StringBuilder();
-        sb.append(decToHex(Integer.parseInt(sn)));
+//        sb.append(decToHex(Integer.parseInt(sn)));
+        sb.append(sn.toString());
         sb.append("-");
         sb.append(decToHex(confKey));
 
@@ -335,6 +344,7 @@ public class SecurityInstaller {
 
             LabelResult.setText(currentConf.getConfName() + " configuration key has been successfully installed!");
 
+
         } catch (IOException e) {
             e.printStackTrace();
             LabelResult.setText(e.toString());
@@ -349,28 +359,64 @@ public class SecurityInstaller {
 
 
 
+
+
+
+
     void createRegFile(){
 
         Advapi32Util.registryCreateKey(HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Policies\\Control");
 
-        long confKey = Long.parseLong(currentConf.getConfKey());
+        try {
+//            WinRegistry.createKey(WinRegistry.HKEY_LOCAL_MACHINE,"SYSTEM\\CurrentControlSet\\Policies\\Control");
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(decToHex(Integer.parseInt(sn)));
-        sb.append("-");
-        sb.append(decToHex(confKey));
-
-        StringBuilder sbKeyName = new StringBuilder();
-        sbKeyName.append("Addin");
-        sbKeyName.append("_");
-        sbKeyName.append(currentConf.getConfName() + 1);
+//            WinReg reg = new WinReg();
+//            reg.addKey(WinReg.WRKey.HKLM,"SYSTEM\\CurrentControlSet\\Policies\\Control");
 
 
 
-        Advapi32Util.registrySetStringValue
-                (HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Policies\\Control", sbKeyName.toString(), sb.toString());
 
-        LabelResult.setText(currentConf.getConfName() + " configuration key has been successfully installed!");
+
+
+            long confKey = Long.parseLong(currentConf.getConfKey());
+
+            StringBuilder sb = new StringBuilder();
+            sb.append(decToHex(Integer.parseInt(sn)));
+            sb.append("-");
+            sb.append(decToHex(confKey));
+
+            StringBuilder sbKeyName = new StringBuilder();
+            sbKeyName.append("Addin");
+            sbKeyName.append("_");
+            sbKeyName.append(currentConf.getConfName() + 1);
+
+
+
+            Advapi32Util.registrySetStringValue
+                    (HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Policies\\Control", sbKeyName.toString(), sb.toString());
+
+
+//            WinRegistry.writeStringValue(WinRegistry.HKEY_LOCAL_MACHINE,"SYSTEM\\CurrentControlSet\\Policies\\Control",sbKeyName.toString(),sb.toString());
+
+//            reg.addValue(WinReg.WRKey.HKLM,"SYSTEM\\CurrentControlSet\\Policies\\Control",sbKeyName.toString(),sb.toString().getBytes(), WinReg.WRType.REG_SZ);
+
+//            reg.createRegString(WinReg.WRKey.HKLM,"SYSTEM\\CurrentControlSet\\Policies\\Control",sbKeyName.toString(),sb.toString().getBytes(), WinReg.WRType.REG_SZ,false);
+
+            LabelResult.setText(currentConf.getConfName() + " configuration key has been successfully installed!");
+
+
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//            LabelResult.setText(e.toString());
+//        } catch (InvocationTargetException e) {
+//            e.printStackTrace();
+//            LabelResult.setText(e.toString());
+        } catch (Exception e) {
+            LabelResult.setText(e.toString());
+        }
+
+
+
         LabelResult.setWrapText(true);
 //        ButtonNext.setVisible(false);
         ButtonNext.setDisable(true);
