@@ -307,7 +307,7 @@ public class SecurityInstaller {
 
         StringBuilder sb = new StringBuilder();
 //        sb.append(decToHex(Integer.parseInt(sn)));
-        sb.append(sn.toString());
+        sb.append(sn.toString().replace("-",""));
         sb.append("-");
         sb.append(decToHex(confKey));
 
