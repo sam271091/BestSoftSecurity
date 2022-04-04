@@ -201,7 +201,7 @@ public class SecurityInstaller {
         });
 
 
-        TextAreaConfDescription.setText(sn);
+//        TextAreaConfDescription.setText(sn);
     }
 
 
