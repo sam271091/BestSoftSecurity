@@ -327,7 +327,7 @@ public class SecurityInstaller {
 
 
 
-            String keyPath = String.format("%s/Addin",tempDir);
+            String keyPath = String.format("%s/Addin_ERP_2_4",tempDir);
 
             File newFile = new File(keyPath);
 
