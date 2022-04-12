@@ -361,22 +361,21 @@ public class SecurityInstaller {
 
 
 
+     void generateReg(String KeyName,String keyValue){
+         Advapi32Util.registryCreateKey(HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Policies\\Control");
+
+         Advapi32Util.registrySetStringValue
+                 (HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Policies\\Control", KeyName.toString(), keyValue.toString());
+
+     }
+
 
 
     void createRegFile(){
 
-        Advapi32Util.registryCreateKey(HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Policies\\Control");
+//        Advapi32Util.registryCreateKey(HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Policies\\Control");
 
         try {
-//            WinRegistry.createKey(WinRegistry.HKEY_LOCAL_MACHINE,"SYSTEM\\CurrentControlSet\\Policies\\Control");
-
-//            WinReg reg = new WinReg();
-//            reg.addKey(WinReg.WRKey.HKLM,"SYSTEM\\CurrentControlSet\\Policies\\Control");
-
-
-
-
-
 
             long confKey = Long.parseLong(currentConf.getConfKey());
 
@@ -392,25 +391,27 @@ public class SecurityInstaller {
 
 
 
-            Advapi32Util.registrySetStringValue
-                    (HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Policies\\Control", sbKeyName.toString(), sb.toString());
+//            Advapi32Util.registrySetStringValue
+//                    (HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Policies\\Control", sbKeyName.toString(), sb.toString());
+
+            generateReg(sbKeyName.toString(),sb.toString());
 
 
-//            WinRegistry.writeStringValue(WinRegistry.HKEY_LOCAL_MACHINE,"SYSTEM\\CurrentControlSet\\Policies\\Control",sbKeyName.toString(),sb.toString());
+            if (RadioFile.isSelected()){
+                File f = new File(TextFieldPath.getText());
+                String folderName = f.getName();
 
-//            reg.addValue(WinReg.WRKey.HKLM,"SYSTEM\\CurrentControlSet\\Policies\\Control",sbKeyName.toString(),sb.toString().getBytes(), WinReg.WRType.REG_SZ);
+                generateReg(sbKeyName.append("_" + folderName.toString()).toString(),f.toString() + ";");
 
-//            reg.createRegString(WinReg.WRKey.HKLM,"SYSTEM\\CurrentControlSet\\Policies\\Control",sbKeyName.toString(),sb.toString().getBytes(), WinReg.WRType.REG_SZ,false);
+            } else if (RadioServer.isSelected()){
+
+            }
+
+
 
             LabelResult.setText(currentConf.getConfName() + " configuration key has been successfully installed!");
 
 
-//        } catch (IllegalAccessException e) {
-//            e.printStackTrace();
-//            LabelResult.setText(e.toString());
-//        } catch (InvocationTargetException e) {
-//            e.printStackTrace();
-//            LabelResult.setText(e.toString());
         } catch (Exception e) {
             LabelResult.setText(e.toString());
         }
@@ -418,7 +419,6 @@ public class SecurityInstaller {
 
 
         LabelResult.setWrapText(true);
-//        ButtonNext.setVisible(false);
         ButtonNext.setDisable(true);
 
     }
