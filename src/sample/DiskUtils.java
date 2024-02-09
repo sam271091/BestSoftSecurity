@@ -1,9 +1,8 @@
 package sample;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import org.json.JSONObject;
+
+import java.io.*;
 
 public class DiskUtils {
     private DiskUtils() {
@@ -132,5 +131,82 @@ public class DiskUtils {
 
 
     }
+
+
+    public static String createTempFileLinux(String sn,Configuration currentConf){
+        long confKey = Long.parseLong(currentConf.getConfKey());
+
+        StringBuilder sb = new StringBuilder();
+//        sb.append(decToHex(Integer.parseInt(sn)));
+        sb.append(sn.toString().replace("-",""));
+        sb.append("-");
+        sb.append(decToHex(confKey));
+
+        StringBuilder sbKeyName = new StringBuilder();
+        sbKeyName.append("Addin");
+        sbKeyName.append("_");
+        sbKeyName.append(currentConf.getConfName());
+
+        try {
+
+            String tempDir = System.getProperty("java.io.tmpdir");
+
+
+
+            String keyPath = String.format("%s/Addin_ERP_2_4",tempDir);
+
+            File newFile = new File(keyPath);
+
+            BufferedWriter output = new BufferedWriter(new FileWriter(newFile));
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put(sbKeyName.toString(),sb.toString());
+
+            output.write(jsonObject.toString());
+            output.close();
+
+            return currentConf.getConfName() + " configuration key has been successfully installed!";
+
+
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            return e.toString();
+        }
+
+    }
+
+
+    public static String decToHex(long inputDigit){
+
+        inputDigit = Long.max(inputDigit,-inputDigit);
+
+        int base = 16;
+
+        String result = "";
+
+        String hexSymbols = "0123456789ABCDEF";
+
+        while (inputDigit != 0) {
+            Long pos = (inputDigit % base);
+
+//            int pos = Long.
+
+            result = hexSymbols.substring(pos.intValue(),pos.intValue()+1) + result;
+
+            inputDigit = inputDigit/base;
+        }
+
+        return result;
+    }
+
+
+
 }
+
+
+
 

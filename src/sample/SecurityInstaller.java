@@ -303,53 +303,55 @@ public class SecurityInstaller {
 
     void createTempFile(){
 
-        long confKey = Long.parseLong(currentConf.getConfKey());
+//        long confKey = Long.parseLong(currentConf.getConfKey());
+//
+//        StringBuilder sb = new StringBuilder();
+////        sb.append(decToHex(Integer.parseInt(sn)));
+//        sb.append(sn.toString().replace("-",""));
+//        sb.append("-");
+//        sb.append(DiskUtils.decToHex(confKey));
+//
+//        StringBuilder sbKeyName = new StringBuilder();
+//        sbKeyName.append("Addin");
+//        sbKeyName.append("_");
+//        sbKeyName.append(currentConf.getConfName());
+//
+//
+//
+//
+//
+//
+//        try {
+//
+//            String tempDir = System.getProperty("java.io.tmpdir");
+//
+//
+//
+//            String keyPath = String.format("%s/Addin_ERP_2_4",tempDir);
+//
+//            File newFile = new File(keyPath);
+//
+//            BufferedWriter output = new BufferedWriter(new FileWriter(newFile));
+//
+//            JSONObject jsonObject = new JSONObject();
+//            jsonObject.put(sbKeyName.toString(),sb.toString());
+//
+//            output.write(jsonObject.toString());
+//            output.close();
+//
+//
+//
+//
+//            LabelResult.setText(currentConf.getConfName() + " configuration key has been successfully installed!");
+//
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            LabelResult.setText(e.toString());
+//        }
 
-        StringBuilder sb = new StringBuilder();
-//        sb.append(decToHex(Integer.parseInt(sn)));
-        sb.append(sn.toString().replace("-",""));
-        sb.append("-");
-        sb.append(decToHex(confKey));
 
-        StringBuilder sbKeyName = new StringBuilder();
-        sbKeyName.append("Addin");
-        sbKeyName.append("_");
-        sbKeyName.append(currentConf.getConfName());
-
-
-
-
-
-
-        try {
-
-            String tempDir = System.getProperty("java.io.tmpdir");
-
-
-
-            String keyPath = String.format("%s/Addin_ERP_2_4",tempDir);
-
-            File newFile = new File(keyPath);
-
-            BufferedWriter output = new BufferedWriter(new FileWriter(newFile));
-
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put(sbKeyName.toString(),sb.toString());
-
-            output.write(jsonObject.toString());
-            output.close();
-
-
-
-
-            LabelResult.setText(currentConf.getConfName() + " configuration key has been successfully installed!");
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            LabelResult.setText(e.toString());
-        }
-
+        LabelResult.setText(DiskUtils.createTempFileLinux(sn,currentConf));
 
 
         LabelResult.setWrapText(true);
@@ -380,9 +382,9 @@ public class SecurityInstaller {
             long confKey = Long.parseLong(currentConf.getConfKey());
 
             StringBuilder sb = new StringBuilder();
-            sb.append(decToHex(Integer.parseInt(sn)));
+            sb.append(DiskUtils.decToHex(Integer.parseInt(sn)));
             sb.append("-");
-            sb.append(decToHex(confKey));
+            sb.append(DiskUtils.decToHex(confKey));
 
             StringBuilder sbKeyName = new StringBuilder();
             sbKeyName.append("Addin");
@@ -424,28 +426,7 @@ public class SecurityInstaller {
     }
 
 
-    String decToHex(long inputDigit){
 
-        inputDigit = Long.max(inputDigit,-inputDigit);
-
-        int base = 16;
-
-        String result = "";
-
-        String hexSymbols = "0123456789ABCDEF";
-
-        while (inputDigit != 0) {
-            Long pos = (inputDigit % base);
-
-//            int pos = Long.
-
-            result = hexSymbols.substring(pos.intValue(),pos.intValue()+1) + result;
-
-            inputDigit = inputDigit/base;
-        }
-
-        return result;
-    }
 
 
 
