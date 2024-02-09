@@ -31,7 +31,7 @@ public class SecurityInstallerNoGUI {
 
         System.out.println("Select configuration:");
 
-        for (int i = 0;i <= dataMap.size();i++) {
+        for (int i = 0;i < dataMap.size();i++) {
              Configuration config = dataMap.get(i);
             System.out.println("Type: " + i + " for " + config.getConfName() + " : " + config.getConfDescription());
         }
@@ -59,7 +59,7 @@ public class SecurityInstallerNoGUI {
 
         String proceed = getResponseFromUser(in);
 
-        if (proceed.equals("Y")){
+        if (proceed.toUpperCase().equals("Y")){
 
             if (OSValidator.isIsUnix()){
                 System.out.println(DiskUtils.createTempFileLinux(sn,currentConfig));
