@@ -55,7 +55,7 @@ public class SecurityInstallerNoGUI {
 
         System.out.println("Your selection: " + currentConfig.getConfName());
 
-        System.out.println("Proceed instalation? Y/N");
+        System.out.println("Proceed installation? Y/N");
 
         String proceed = getResponseFromUser(in);
 
