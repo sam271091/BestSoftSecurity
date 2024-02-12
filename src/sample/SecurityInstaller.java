@@ -139,7 +139,7 @@ public class SecurityInstaller {
         if (OSValidator.isIsWindows())
            sn = DiskUtils.getSerialNumber_Windows("C");
         else if (OSValidator.isIsUnix()){
-            sn = DiskUtils.getSerialNumber_Linux();
+            sn = DiskUtils.getSerialNumber_Linux("sda");
         }
         SetConfText(RadioButtonConf1);
 
@@ -351,7 +351,7 @@ public class SecurityInstaller {
 //        }
 
 
-        LabelResult.setText(DiskUtils.createTempFileLinux(sn,currentConf));
+        LabelResult.setText(DiskUtils.createTempFileLinux(sn,currentConf,"sda"));
 
 
         LabelResult.setWrapText(true);

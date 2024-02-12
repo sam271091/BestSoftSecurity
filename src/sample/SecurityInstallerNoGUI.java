@@ -10,6 +10,8 @@ public class SecurityInstallerNoGUI {
 
     private Integer selectedConf;
 
+    private String selectedDisk;
+
     private Configuration currentConfig;
 
     public void initialize(){
@@ -23,18 +25,9 @@ public class SecurityInstallerNoGUI {
         dataMap.put(5,new Configuration("ERP_2_4","Configuration, \"Best Soft: ERP 2.4\"","6256223652"));
         //
 
-        if (OSValidator.isIsWindows())
-            sn = DiskUtils.getSerialNumber_Windows("C");
-        else if (OSValidator.isIsUnix()){
-            sn = DiskUtils.getSerialNumber_Linux();
-        }
 
-        System.out.println("Select configuration:");
 
-        for (int i = 0;i < dataMap.size();i++) {
-             Configuration config = dataMap.get(i);
-            System.out.println("Type: " + i + " for " + config.getConfName() + " : " + config.getConfDescription());
-        }
+
 
     }
 
@@ -47,6 +40,32 @@ public class SecurityInstallerNoGUI {
     public void startInstallation(){
 
         Scanner in = new Scanner(System.in);
+
+
+
+        System.out.println("Select one of the devices listed below:");
+
+        DiskUtils.showAvailableDevs();
+
+        selectedDisk = getResponseFromUser(in);
+
+
+        if (OSValidator.isIsWindows())
+            sn = DiskUtils.getSerialNumber_Windows("C");
+        else if (OSValidator.isIsUnix()){
+            sn = DiskUtils.getSerialNumber_Linux(selectedDisk);
+        }
+
+
+
+
+
+        System.out.println("Select configuration:");
+
+        for (int i = 0;i < dataMap.size();i++) {
+            Configuration config = dataMap.get(i);
+            System.out.println("Type: " + i + " for " + config.getConfName() + " : " + config.getConfDescription());
+        }
 
         String s = getResponseFromUser(in);
 
@@ -62,7 +81,7 @@ public class SecurityInstallerNoGUI {
         if (proceed.toUpperCase().equals("Y")){
 
             if (OSValidator.isIsUnix()){
-                System.out.println(DiskUtils.createTempFileLinux(sn,currentConfig));
+                System.out.println(DiskUtils.createTempFileLinux(sn,currentConfig,selectedDisk));
             }
 
         } else {
